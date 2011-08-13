@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RegistroIVA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="262"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     account_temp_regiva."write_uid" AS account_temp_regiva_write_uid,
+     account_temp_regiva."des_iva" AS account_temp_regiva_des_iva,
+     account_temp_regiva."codice_iva_riga_id" AS account_temp_regiva_codice_iva_riga_id,
+     account_temp_regiva."data_doc" AS account_temp_regiva_data_doc,
+     account_temp_regiva."base" AS account_temp_regiva_base,
+     account_temp_regiva."period_id" AS account_temp_regiva_period_id,
+     account_temp_regiva."num_doc" AS account_temp_regiva_num_doc,
+     account_temp_regiva."partner_id" AS account_temp_regiva_partner_id,
+     account_temp_regiva."tot_doc" AS account_temp_regiva_tot_doc,
+     account_temp_regiva."journal_id" AS account_temp_regiva_journal_id,
+     account_temp_regiva."amount" AS account_temp_regiva_amount,
+     account_temp_regiva."indetraibile" AS account_temp_regiva_indetraibile,
+     account_temp_regiva."protocollo" AS account_temp_regiva_protocollo,
+     account_temp_regiva."data_registrazione" AS account_temp_regiva_data_registrazione,
+     res_partner."name" AS res_partner_name,
+     res_company."name" AS res_company_name,
+     account_journal."name" AS account_journal_name,
+     res_partner."vat" AS res_partner_vat,
+     account_period."date_stop" AS account_period_date_stop,
+     account_period."date_start" AS account_period_date_start,
+     account_period."name" AS account_period_name
+FROM
+     "public"."res_partner" res_partner RIGHT OUTER JOIN "public"."account_temp_regiva" account_temp_regiva ON res_partner."id" = account_temp_regiva."partner_id"
+     RIGHT OUTER JOIN "public"."res_company" res_company ON res_partner."company_id" = res_company."id"
+     LEFT OUTER JOIN "public"."account_journal" account_journal ON account_temp_regiva."journal_id" = account_journal."id"
+     LEFT OUTER JOIN "public"."account_period" account_period ON account_temp_regiva."period_id" = account_period."id"]]>
+	</queryString>
+	<field name="account_temp_regiva_write_uid" class="java.lang.Integer"/>
+	<field name="account_temp_regiva_des_iva" class="java.lang.String"/>
+	<field name="account_temp_regiva_codice_iva_riga_id" class="java.lang.Integer"/>
+	<field name="account_temp_regiva_data_doc" class="java.sql.Date"/>
+	<field name="account_temp_regiva_base" class="java.math.BigDecimal"/>
+	<field name="account_temp_regiva_period_id" class="java.lang.Integer"/>
+	<field name="account_temp_regiva_num_doc" class="java.lang.String"/>
+	<field name="account_temp_regiva_partner_id" class="java.lang.Integer"/>
+	<field name="account_temp_regiva_tot_doc" class="java.math.BigDecimal"/>
+	<field name="account_temp_regiva_journal_id" class="java.lang.Integer"/>
+	<field name="account_temp_regiva_amount" class="java.math.BigDecimal"/>
+	<field name="account_temp_regiva_indetraibile" class="java.lang.Boolean"/>
+	<field name="account_temp_regiva_protocollo" class="java.lang.Integer"/>
+	<field name="account_temp_regiva_data_registrazione" class="java.sql.Date"/>
+	<field name="res_partner_name" class="java.lang.String"/>
+	<field name="res_company_name" class="java.lang.String"/>
+	<field name="account_journal_name" class="java.lang.String"/>
+	<field name="res_partner_vat" class="java.lang.String"/>
+	<field name="account_period_date_stop" class="java.sql.Date"/>
+	<field name="account_period_date_start" class="java.sql.Date"/>
+	<field name="account_period_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="107" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="36" width="555" height="71"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "Testata.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="0" y="0" width="231" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{res_company_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="26" width="231" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_journal_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="231" y="26" width="30" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Anno]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="265" y="26" width="32" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{account_temp_regiva_data_doc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="450" y="2" width="32" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{account_temp_regiva_data_doc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="413" y="2" width="30" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Anno]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="530" y="2" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="491" y="2" width="30" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Pag.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="26" width="59" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Periodo dal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="26" width="20" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[al]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="380" y="26" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{account_period_date_start}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="471" y="26" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{account_period_date_stop}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="555" height="30"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="72" y="2" width="58" height="26"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="6" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Cliente/Fornitore	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="6" width="65" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Totale Doc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="2" width="65" height="26"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Data Registrazione]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="6" width="38" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[N. Doc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="6" width="40" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Imposta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="6" width="60" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Imponibile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="6" width="50" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Codice IVA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="283" y="2" width="65" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{account_temp_regiva_tot_doc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="418" y="2" width="40" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{account_temp_regiva_amount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="135" y="2" width="38" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_temp_regiva_num_doc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="2" y="2" width="65" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{account_temp_regiva_data_registrazione}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="72" y="2" width="58" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{account_temp_regiva_data_doc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="178" y="2" width="100" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{res_partner_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="463" y="2" width="92" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{account_temp_regiva_des_iva}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="353" y="2" width="60" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{account_temp_regiva_base}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="187">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="175"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "Piedipagina.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
